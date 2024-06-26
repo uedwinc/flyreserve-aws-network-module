@@ -174,3 +174,11 @@ resource "aws_route_table_association" "private-b-association" {
   subnet_id      = aws_subnet.private-subnet-b.id
   route_table_id = aws_route_table.private-route-b.id
 }
+
+resource "aws_route53_zone" "private" {
+  name = "flyreserve.com"
+
+  vpc {
+    vpc_id = aws_vpc.main.id
+  }
+}

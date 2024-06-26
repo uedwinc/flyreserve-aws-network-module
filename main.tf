@@ -175,8 +175,13 @@ resource "aws_route_table_association" "private-b-association" {
   route_table_id = aws_route_table.private-route-b.id
 }
 
-resource "aws_route53_zone" "private" {
-  name = "flyreserve.com"
+# Create a Route 53 zone for DNS support inside the VPC
+resource "aws_route53_zone" "private-zone" {
+  # AWS requires a lowercase name. 
+  #name = "lower(${var.env_name}.${var.vpc_name}.com)"
+  name = "${var.vpc_name}.com"
+  #name = "testing.com"
+  force_destroy = true
 
   vpc {
     vpc_id = aws_vpc.main.id
